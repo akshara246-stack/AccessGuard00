@@ -1,0 +1,126 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h1>🚨 Security Simulation Lab</h1>
+
+<p class="text-muted">
+    Safely simulate IAM security events.
+</p>
+
+
+<div class="row g-4">
+
+
+    <div class="col-md-4">
+
+        <div class="attack-card">
+
+            <h2>⬆️</h2>
+
+            <h3>Privilege Escalation</h3>
+
+            <p>
+                Simulate an unauthorized attempt
+                to gain higher privileges.
+            </p>
+
+            <form method="POST"
+                  action="/security/simulate">
+
+                <input
+                    type="hidden"
+                    name="attack"
+                    value="privilege"
+                >
+
+                <button class="btn btn-danger">
+                    Simulate
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+
+    <div class="col-md-4">
+
+        <div class="attack-card">
+
+            <h2>🚪</h2>
+
+            <h3>Unauthorized Access</h3>
+
+            <p>
+                Simulate access to an administrator
+                resource without permission.
+            </p>
+
+            <form method="POST"
+                  action="/security/simulate">
+
+                <input
+                    type="hidden"
+                    name="attack"
+                    value="admin"
+                >
+
+                <button class="btn btn-danger">
+                    Simulate
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+
+    <div class="col-md-4">
+
+        <div class="attack-card">
+
+            <h2>⚠️</h2>
+
+            <h3>Suspicious Activity</h3>
+
+            <p>
+                Simulate repeated failed access
+                attempts.
+            </p>
+
+            <form method="POST"
+                  action="/security/simulate">
+
+                <input
+                    type="hidden"
+                    name="attack"
+                    value="failed"
+                >
+
+                <button class="btn btn-warning">
+                    Simulate
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+{% if result %}
+
+<div class="result-box denied mt-5">
+
+    {{ result }}
+
+</div>
+
+{% endif %}
+
+{% endblock %}

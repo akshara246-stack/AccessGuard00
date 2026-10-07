@@ -1,0 +1,162 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h1>🎭 Role-Based Access Control</h1>
+
+<p class="text-muted">
+    Test whether a user's role allows access to a resource.
+</p>
+
+
+<div class="card-box">
+
+    <h3>🧪 Access Test</h3>
+
+    <form method="POST" action="/rbac/check">
+
+        <label>User</label>
+
+        <select
+            name="user_id"
+            class="form-select"
+            required
+        >
+
+        {% for user in users %}
+
+            <option value="{{ user.id }}">
+                {{ user.username }}
+            </option>
+
+        {% endfor %}
+
+        </select>
+
+
+        <label class="mt-3">
+            Resource
+        </label>
+
+        <select
+            name="resource"
+            class="form-select"
+        >
+
+            <option>Payroll</option>
+            <option>Employee Records</option>
+            <option>Project Files</option>
+            <option>HR Documents</option>
+            <option>System Settings</option>
+            <option>Company News</option>
+
+        </select>
+
+
+        <label class="mt-3">
+            Action
+        </label>
+
+        <select
+            name="action"
+            class="form-select"
+        >
+
+            <option>READ</option>
+            <option>WRITE</option>
+
+        </select>
+
+
+        <button class="btn btn-primary mt-4">
+
+            CHECK ACCESS
+
+        </button>
+
+    </form>
+
+</div>
+
+
+{% if result %}
+
+<div class="
+    result-box
+    {% if result == 'GRANTED' %}
+        success
+    {% else %}
+        denied
+    {% endif %}
+">
+
+    {% if result == "GRANTED" %}
+
+        🟢 ACCESS GRANTED
+
+    {% else %}
+
+        🔴 ACCESS DENIED
+
+    {% endif %}
+
+    <br>
+
+    Role: {{ role }}
+
+    <br>
+
+    Resource: {{ resource }}
+
+    <br>
+
+    Action: {{ action }}
+
+</div>
+
+{% endif %}
+
+
+<div class="card-box mt-4">
+
+    <h3>Permission Matrix</h3>
+
+    <table class="table">
+
+        <thead>
+
+            <tr>
+                <th>Role</th>
+                <th>Resource</th>
+                <th>Action</th>
+            </tr>
+
+        </thead>
+
+        <tbody>
+
+        {% for p in permissions %}
+
+            <tr>
+
+                <td>{{ p.role_name }}</td>
+
+                <td>{{ p.resource }}</td>
+
+                <td>
+                    <span class="badge bg-success">
+                        {{ p.action }}
+                    </span>
+                </td>
+
+            </tr>
+
+        {% endfor %}
+
+        </tbody>
+
+    </table>
+
+</div>
+
+{% endblock %}

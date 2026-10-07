@@ -1,0 +1,118 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h1>📊 Audit & Monitoring</h1>
+
+<p class="text-muted">
+    Monitor authentication, access attempts and security events.
+</p>
+
+
+<div class="card-box">
+
+    <h3>Activity Logs</h3>
+
+    <table class="table">
+
+        <thead>
+
+            <tr>
+                <th>Time</th>
+                <th>User</th>
+                <th>Action</th>
+                <th>Resource</th>
+                <th>Result</th>
+                <th>Description</th>
+            </tr>
+
+        </thead>
+
+        <tbody>
+
+        {% for log in logs %}
+
+            <tr>
+
+                <td>
+                    {{ log.timestamp }}
+                </td>
+
+                <td>
+                    {{ log.username }}
+                </td>
+
+                <td>
+                    {{ log.action }}
+                </td>
+
+                <td>
+                    {{ log.resource }}
+                </td>
+
+                <td>
+
+                    {% if log.result == "GRANTED" %}
+
+                        🟢 {{ log.result }}
+
+                    {% elif log.result == "DENIED" %}
+
+                        🔴 {{ log.result }}
+
+                    {% else %}
+
+                        ⚠️ {{ log.result }}
+
+                    {% endif %}
+
+                </td>
+
+                <td>
+                    {{ log.description }}
+                </td>
+
+            </tr>
+
+        {% endfor %}
+
+        </tbody>
+
+    </table>
+
+</div>
+
+
+<div class="card-box mt-4">
+
+    <h3>🚨 Security Alerts</h3>
+
+    {% for alert in alerts %}
+
+        <div class="alert alert-danger">
+
+            <strong>
+                {{ alert.alert_type }}
+            </strong>
+
+            <br>
+
+            {{ alert.description }}
+
+            <br>
+
+            <small>
+                Severity: {{ alert.severity }}
+            </small>
+
+        </div>
+
+    {% else %}
+
+        <p>No security alerts.</p>
+
+    {% endfor %}
+
+</div>
+
+{% endblock %}

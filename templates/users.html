@@ -1,0 +1,157 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h1>👤 Identity Management</h1>
+
+<p class="text-muted">
+    Manage identities, departments and roles.
+</p>
+
+
+<div class="card-box">
+
+    <h3>Add New User</h3>
+
+    <form method="POST" action="/users/add">
+
+        <div class="row">
+
+            <div class="col-md-6">
+
+                <input
+                    name="username"
+                    class="form-control"
+                    placeholder="Username"
+                    required
+                >
+
+            </div>
+
+            <div class="col-md-6">
+
+                <input
+                    name="email"
+                    type="email"
+                    class="form-control"
+                    placeholder="Email"
+                    required
+                >
+
+            </div>
+
+        </div>
+
+
+        <div class="row mt-3">
+
+            <div class="col-md-4">
+
+                <input
+                    name="password"
+                    type="password"
+                    class="form-control"
+                    placeholder="Password"
+                    required
+                >
+
+            </div>
+
+            <div class="col-md-4">
+
+                <input
+                    name="department"
+                    class="form-control"
+                    placeholder="Department"
+                    required
+                >
+
+            </div>
+
+            <div class="col-md-4">
+
+                <select
+                    name="role_id"
+                    class="form-select"
+                    required
+                >
+
+                    <option value="1">Admin</option>
+                    <option value="2">Manager</option>
+                    <option value="3">Employee</option>
+                    <option value="4">Intern</option>
+                    <option value="5">Guest</option>
+
+                </select>
+
+            </div>
+
+        </div>
+
+
+        <button class="btn btn-primary mt-3">
+
+            + Create User
+
+        </button>
+
+    </form>
+
+</div>
+
+
+<div class="card-box mt-4">
+
+    <h3>Users</h3>
+
+    <div class="table-responsive">
+
+        <table class="table">
+
+            <thead>
+
+                <tr>
+                    <th>Username</th>
+                    <th>Email</th>
+                    <th>Department</th>
+                    <th>Role</th>
+                    <th>Status</th>
+                </tr>
+
+            </thead>
+
+            <tbody>
+
+            {% for user in users %}
+
+                <tr>
+
+                    <td>{{ user.username }}</td>
+
+                    <td>{{ user.email }}</td>
+
+                    <td>{{ user.department }}</td>
+
+                    <td>
+                        <span class="badge bg-primary">
+                            {{ user.role_name }}
+                        </span>
+                    </td>
+
+                    <td>
+                        🟢 {{ user.status }}
+                    </td>
+
+                </tr>
+
+            {% endfor %}
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+{% endblock %}
